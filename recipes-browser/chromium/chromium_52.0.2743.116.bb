@@ -3,6 +3,9 @@ require chromium-unbundle.inc
 
 # inherit insane
 
+OUTPUT_DIR = "out/Release"
+B = "${S}/${OUTPUT_DIR}"
+
 SRC_URI += " \
         file://0001-make-use-of-existing-gn-args-in-ui-build-config.patch \
         file://0002-gn-Stop-asserting-on-use_gconf-when-looking-for-atk.patch \
@@ -153,11 +156,11 @@ EOF
 	# ./build/linux/unbundle/remove_bundled_libraries.py ${THIRD_PARTY_TO_PRESERVE}
 	./build/linux/unbundle/replace_gn_files.py --system-libraries ${GN_UNBUNDLE_LIBS}
 
-	gn gen --args='${GN_ARGS}' //out/Release
+	gn gen --args='${GN_ARGS}' "${OUTPUT_DIR}"
 }
 
 do_compile() {
-	ninja -C ${S}/out/Release -v chrome chrome_sandbox
+	ninja -v chrome chrome_sandbox
 }
 
 do_install() {
@@ -174,14 +177,14 @@ do_install() {
 	install -m 0755 chromium-wrapper ${D}${libdir}/chromium/chromium-wrapper
 	ln -s ${libdir}/chromium/chromium-wrapper ${D}${bindir}/chromium
 
-	install -m 4755 ${S}/out/Release/chrome_sandbox ${D}${libdir}/chromium/chrome-sandbox
-	install -m 0755 ${S}/out/Release/chrome ${D}${libdir}/chromium/chromium-bin
-	install -m 0644 ${S}/out/Release/*.bin ${D}${libdir}/chromium/
-	install -m 0644 ${S}/out/Release/chrome_*.pak ${D}${libdir}/chromium/
-	install -m 0644 ${S}/out/Release/icudtl.dat ${D}${libdir}/chromium/icudtl.dat
-	install -m 0644 ${S}/out/Release/resources.pak ${D}${libdir}/chromium/resources.pak
+	install -m 4755 chrome_sandbox ${D}${libdir}/chromium/chrome-sandbox
+	install -m 0755 chrome ${D}${libdir}/chromium/chromium-bin
+	install -m 0644 *.bin ${D}${libdir}/chromium/
+	install -m 0644 chrome_*.pak ${D}${libdir}/chromium/
+	install -m 0644 icudtl.dat ${D}${libdir}/chromium/icudtl.dat
+	install -m 0644 resources.pak ${D}${libdir}/chromium/resources.pak
 
-	install -m 0644 ${S}/out/Release/locales/*.pak ${D}${libdir}/chromium/locales/
+	install -m 0644 locales/*.pak ${D}${libdir}/chromium/locales/
 }
 
 # FILES_${PN} = "${bindir}/xwalk ${libdir}/xwalk/*"
