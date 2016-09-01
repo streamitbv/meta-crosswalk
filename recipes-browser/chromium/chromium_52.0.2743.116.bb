@@ -1,8 +1,6 @@
 require chromium.inc
 require chromium-unbundle.inc
 
-# inherit insane
-
 OUTPUT_DIR = "out/Release"
 B = "${S}/${OUTPUT_DIR}"
 
@@ -160,7 +158,7 @@ EOF
 }
 
 do_compile() {
-	ninja -v chrome chrome_sandbox
+	ninja -v chrome chrome_sandbox -j42
 }
 
 do_install() {
