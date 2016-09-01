@@ -22,10 +22,10 @@ BUILD_LD = "${CXX}"
 do_configure[noexec] = "1"
 
 do_compile() {
-    python ${S}/tools/gn/bootstrap/bootstrap.py --verbose --no-clean --no-rebuild
+	python ${S}/tools/gn/bootstrap/bootstrap.py --verbose --no-clean --no-rebuild
 }
 
 do_install() {
-    install -d ${D}${bindir}
-    install -m 0755 ${S}/out/Release/gn ${D}${bindir}/gn
+	install -d ${D}${bindir}
+	install -m 0755 ${S}/out/Release/gn ${D}${bindir}/gn
 }
