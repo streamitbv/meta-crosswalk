@@ -96,24 +96,20 @@ GN_ARGS += '\
         target_cpu="${@gn_arch_name(d)}" \
         '
 
-# This function translates between Yocto's TARGET_ARCH values and the ones
+# This function translates between Yocto's TUNE_ARCH values and the ones
 # expected by GN.
 def gn_arch_name(d):
-    import re
-    target_arch = d.getVar("TARGET_ARCH", True)
-    if re.match(r"i[356]86", target_arch):
-        return "x86"
-    elif target_arch == "x86_64":
-        return "x64"
-    elif target_arch == "arm":
-        # FIXME(rakuco): no idea if this works.
-        return "arm"
-    elif target_arch == "aarch64":
-        return "arm64"
-    elif target_arch == "mipsel":
-        return "mipsel"
-    else:
-        bb.msg.fatal("Unknown TARGET_ARCH value.")
+    arch_equivalences = {
+        'aarch64': 'arm64',
+        'arm': 'arm',
+        'i586': 'x86',
+        'x86_64': 'x64',
+    }
+    tune_arch = d.getVar("TUNE_ARCH", True)
+    try:
+        return arch_equivalences[tune_arch]
+    except KeyError:
+        bb.msg.fatal("Unknown TUNE_ARCH value.")
 
 do_configure() {
 	mkdir -p ${S}/build/toolchain/yocto
