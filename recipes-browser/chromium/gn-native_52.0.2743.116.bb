@@ -19,7 +19,9 @@ B = "${S}/out_bootstrap"
 # some of the arguments passed to it.
 BUILD_LD = "${CXX}"
 
-do_configure() {
+do_configure[noexec] = "1"
+
+do_compile() {
     python ${S}/tools/gn/bootstrap/bootstrap.py --verbose --no-clean --no-rebuild
 }
 
