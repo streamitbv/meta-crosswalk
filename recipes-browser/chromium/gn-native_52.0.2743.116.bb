@@ -25,5 +25,5 @@ do_configure() {
 
 do_install() {
     install -d ${D}${bindir}
-    install -m 0755 ${S}/out_bootstrap/gn ${D}${bindir}/gn
+    install -m 0755 ${S}/out/Release/gn ${D}${bindir}/gn
 }
