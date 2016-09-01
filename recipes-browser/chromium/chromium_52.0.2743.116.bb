@@ -26,13 +26,13 @@ DEPENDS = "\
     alsa-lib \
     atk \
     bison-native \
-    chromium-native \
     dbus \
     expat \
     flac \
     fontconfig \
     freetype \
     glib-2.0 \
+    gn-native \
     gtk+ \
     harfbuzz \
     libevent \
