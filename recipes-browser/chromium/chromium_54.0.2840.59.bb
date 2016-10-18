@@ -5,22 +5,7 @@ OUTPUT_DIR = "out/Release"
 B = "${S}/${OUTPUT_DIR}"
 
 SRC_URI += " \
-        file://0001-make-use-of-existing-gn-args-in-ui-build-config.patch \
-        file://0002-gn-Stop-asserting-on-use_gconf-when-looking-for-atk.patch \
-        file://0003-gn-Stop-making-use_atk-depend-on-use_gconf.patch \
-        file://0004-make-use-of-use_gconf-use_glib-gn-args-in-content-br.patch \
-        file://0001-Remove-base-internal-InotifyReader-s-destructor.patch \
-        file://0001-gn-Use-a-separate-flag-for-enabling-libgnome-keyring.patch \
-        file://0001-Rework-v8_target_arch-target_cpu-approach-to-use-v8_.patch \
-        file://0002-Land-chromium-side-work-to-clean-up-handling-of-v8_t.patch \
-        file://0003-gn-Make-v8_target_arch-a-GN-declare_arg.patch \
-        file://0004-gn-Fix-setting-v8_target_arch-default.patch \
-        file://0005-Update-GN-build-to-use-v8_target_cpu-instead-of-v8_t.patch \
-        file://0006-Try-to-reland-v8_snapshot-GN-build-changes-take-3.patch \
-        file://0007-gn-Fix-another-ia32-x86-typo.patch \
-        file://0008-gn-Set-correct-defaults-for-some-gn-args.patch \
-        file://0009-Land-v8-side-changes-to-switch-to-v8_current_cpu-in-.patch \
-        file://0010-Attempt-4-to-land-Fix-double-building-of-v8-in-GN-bu.patch \
+        file://0001-Build-error-in-chrome-browser-extensions-api-tabs-ta.patch \
         "
 
 DEPENDS = "\
@@ -124,13 +109,15 @@ do_configure() {
    ld = cxx
    nm = "${BUILD_NM}"
    readelf = "${BUILD_PREFIX}readelf"
-   is_clang = false
-   toolchain_cpu = "x64"
-   toolchain_os = "linux"
    extra_cflags = "${BUILD_CFLAGS}"
    extra_cppflags = "${BUILD_CPPFLAGS}"
    extra_cxxflags = "${BUILD_CXXFLAGS}"
    extra_ldflags = "${BUILD_LDFLAGS}"
+   toolchain_args = {
+     current_cpu = "x64"
+     current_os = "linux"
+     is_clang = false
+   }
  }
  gcc_toolchain("yocto_target") {
    cxx = "${CXX}"
@@ -139,13 +126,15 @@ do_configure() {
    ld = cxx
    nm = "${NM}"
    readelf = "${TARGET_PREFIX}readelf"
-   is_clang = false
-   toolchain_cpu = "${@gn_arch_name(d)}"
-   toolchain_os = "linux"
    extra_cflags = "${TARGET_CFLAGS}"
    extra_cppflags = "${TARGET_CPPFLAGS}"
    extra_cxxflags = "${TARGET_CXXFLAGS} -Wno-strict-overflow"
    extra_ldflags = "${TARGET_LDFLAGS}"
+   toolchain_args = {
+     current_cpu = "${@gn_arch_name(d)}"
+     current_os = "linux"
+     is_clang = false
+   }
  }
 EOF
 
