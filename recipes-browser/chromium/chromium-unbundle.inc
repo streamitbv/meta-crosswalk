@@ -2,6 +2,7 @@ GN_UNBUNDLE_LIBS = " \
         flac \
         harfbuzz-ng \
         libevent \
+        libjpeg \
         libwebp \
         libxml \
         libxslt \

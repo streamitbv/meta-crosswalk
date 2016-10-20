@@ -21,6 +21,7 @@ DEPENDS = "\
     gn-native \
     gtk+ \
     harfbuzz \
+    jpeg \
     libevent \
     libwebp \
     libx11 \
@@ -59,6 +60,7 @@ GN_ARGS = "\
         use_gnome_keyring=false \
         use_kerberos=false \
         use_pulseaudio=${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'true', 'false', d)} \
+        use_system_libjpeg=true \
         "
 
 # NaCl support depends on the NaCl toolchain that needs to be built before NaCl
