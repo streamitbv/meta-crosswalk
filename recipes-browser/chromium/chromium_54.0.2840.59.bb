@@ -1,5 +1,6 @@
 require chromium.inc
 require chromium-unbundle.inc
+require gn-utils.inc
 
 OUTPUT_DIR = "out/Release"
 B = "${S}/${OUTPUT_DIR}"
@@ -82,65 +83,19 @@ GN_ARGS += '\
         host_toolchain="//build/toolchain/yocto:yocto_native" \
         is_clang=false \
         linux_use_bundled_binutils=false \
-        target_cpu="${@gn_arch_name(d)}" \
+        target_cpu="${@gn_arch_name('${TUNE_ARCH}')}" \
         '
 
-# This function translates between Yocto's TUNE_ARCH values and the ones
-# expected by GN.
-def gn_arch_name(d):
-    arch_equivalences = {
-        'aarch64': 'arm64',
-        'arm': 'arm',
-        'i586': 'x86',
-        'x86_64': 'x64',
-    }
-    tune_arch = d.getVar("TUNE_ARCH", True)
-    try:
-        return arch_equivalences[tune_arch]
-    except KeyError:
-        bb.msg.fatal("Unknown TUNE_ARCH value.")
+python do_write_toolchain_file () {
+    """Writes a BUILD.gn file for Yocto detailing its toolchains."""
+    toolchain_dir = d.expand("${S}/build/toolchain/yocto")
+    bb.utils.mkdirhier(toolchain_dir)
+    toolchain_file = os.path.join(toolchain_dir, "BUILD.gn")
+    write_toolchain_file(d, toolchain_file)
+}
+addtask write_toolchain_file after do_patch before do_configure
 
 do_configure() {
-	mkdir -p ${S}/build/toolchain/yocto
-	cat > ${S}/build/toolchain/yocto/BUILD.gn <<EOF
- import("//build/config/sysroot.gni")
- import("//build/toolchain/gcc_toolchain.gni")
- gcc_toolchain("yocto_native") {
-   cxx = "${BUILD_CXX}"
-   cc = "${BUILD_CC}"
-   ar = "${BUILD_AR}"
-   ld = cxx
-   nm = "${BUILD_NM}"
-   readelf = "${BUILD_PREFIX}readelf"
-   extra_cflags = "${BUILD_CFLAGS}"
-   extra_cppflags = "${BUILD_CPPFLAGS}"
-   extra_cxxflags = "${BUILD_CXXFLAGS}"
-   extra_ldflags = "${BUILD_LDFLAGS}"
-   toolchain_args = {
-     current_cpu = "x64"
-     current_os = "linux"
-     is_clang = false
-   }
- }
- gcc_toolchain("yocto_target") {
-   cxx = "${CXX}"
-   cc = "${CC}"
-   ar = "${AR}"
-   ld = cxx
-   nm = "${NM}"
-   readelf = "${TARGET_PREFIX}readelf"
-   extra_cflags = "${TARGET_CFLAGS}"
-   extra_cppflags = "${TARGET_CPPFLAGS}"
-   extra_cxxflags = "${TARGET_CXXFLAGS} -Wno-strict-overflow"
-   extra_ldflags = "${TARGET_LDFLAGS}"
-   toolchain_args = {
-     current_cpu = "${@gn_arch_name(d)}"
-     current_os = "linux"
-     is_clang = false
-   }
- }
-EOF
-
 	cd ${S}
 
 	# ./build/linux/unbundle/remove_bundled_libraries.py ${THIRD_PARTY_TO_PRESERVE}
