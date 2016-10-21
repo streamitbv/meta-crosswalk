@@ -78,6 +78,7 @@ GN_ARGS += "use_sysroot=false"
 # using Chromium's toolchain (bundled clang, bundled binutils etc).
 GN_ARGS += '\
         custom_toolchain="//build/toolchain/yocto:yocto_target" \
+        gold_path="" \
         host_toolchain="//build/toolchain/yocto:yocto_native" \
         is_clang=false \
         linux_use_bundled_binutils=false \
