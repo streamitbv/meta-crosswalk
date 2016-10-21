@@ -2,11 +2,14 @@ require chromium.inc
 require chromium-unbundle.inc
 require gn-utils.inc
 
+inherit qemu
+
 OUTPUT_DIR = "out/Release"
 B = "${S}/${OUTPUT_DIR}"
 
 SRC_URI += " \
         file://0001-Build-error-in-chrome-browser-extensions-api-tabs-ta.patch \
+        file://v8-qemu-wrapper.patch \
         "
 
 DEPENDS = "\
@@ -45,6 +48,7 @@ DEPENDS = "\
     pciutils \
     pkgconfig-native \
     ${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)} \
+    qemu-native \
     virtual/libgl \
     "
 DEPENDS_append_x86 = "yasm-native"
@@ -84,7 +88,35 @@ GN_ARGS += '\
         is_clang=false \
         linux_use_bundled_binutils=false \
         target_cpu="${@gn_arch_name('${TUNE_ARCH}')}" \
+        v8_snapshot_toolchain="//build/toolchain/yocto:yocto_target" \
         '
+
+# V8's JIT infrastructure requires binaries such as mksnapshot and
+# mkpeephole to be run in the host during the build. However, these
+# binaries must have the same bit-width as the target (e.g. a x86_64
+# host targeting ARMv6 needs to produce a 32-bit binary). Instead of
+# depending on a third Yocto toolchain, we just build those binaries
+# for the target and run them on the host with QEMU.
+python do_create_v8_qemu_wrapper () {
+    """Creates a small wrapper that invokes QEMU to run some target V8 binaries
+    on the host."""
+    qemu_libdirs = [d.expand('${STAGING_DIR_HOST}${libdir}'),
+                    d.expand('${STAGING_DIR_HOST}${base_libdir}')]
+    qemu_cmd = qemu_wrapper_cmdline(d, d.getVar('STAGING_DIR_HOST', True),
+                                    qemu_libdirs)
+    wrapper_path = d.expand('${B}/v8-qemu-wrapper.sh')
+    with open(wrapper_path, 'w') as wrapper_file:
+        wrapper_file.write("""#!/bin/sh
+
+# This file has been generated automatically.
+# It invokes QEMU to run binaries built for the target in the host during the
+# build process.
+
+%s "$@"
+""" % qemu_cmd)
+    os.chmod(wrapper_path, 0755)
+}
+addtask create_v8_qemu_wrapper after do_patch before do_configure
 
 python do_write_toolchain_file () {
     """Writes a BUILD.gn file for Yocto detailing its toolchains."""
