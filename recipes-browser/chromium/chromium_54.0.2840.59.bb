@@ -92,6 +92,17 @@ GN_ARGS += '\
         v8_snapshot_toolchain="//build/toolchain/yocto:yocto_target" \
         '
 
+# ARM builds need special additional flags (see ${S}/build/config/arm.gni).
+ARM_FLOAT_ABI = "${@bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'hard', 'softfp', d)}"
+GN_ARGS_append_armv6 = ' arm_version=6 arm_float_abi="${ARM_FLOAT_ABI}"'
+GN_ARGS_append_armv7a = ' arm_version=7 arm_float_abi="${ARM_FLOAT_ABI}"'
+# tcmalloc's atomicops-internals-arm-v6plus.h uses the "dmb" instruction that
+# is not available on (some?) ARMv6 models, which causes the build to fail.
+GN_ARGS_append_armv6 += 'use_allocator="none"'
+# The WebRTC code fails to build on ARMv6 when NEON is enabled.
+# https://bugs.chromium.org/p/webrtc/issues/detail?id=6574
+GN_ARGS_append_armv6 += 'arm_use_neon=false'
+
 # V8's JIT infrastructure requires binaries such as mksnapshot and
 # mkpeephole to be run in the host during the build. However, these
 # binaries must have the same bit-width as the target (e.g. a x86_64
