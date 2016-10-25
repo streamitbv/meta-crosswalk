@@ -156,7 +156,7 @@ do_configure() {
 }
 
 do_compile() {
-	ninja -v chrome chrome_sandbox -j42
+	ninja -v "${PARALLEL_MAKE}" chrome chrome_sandbox
 }
 
 do_install() {
