@@ -183,8 +183,7 @@ do_install() {
 	install -m 0644 locales/*.pak ${D}${libdir}/chromium/locales/
 }
 
-# FILES_${PN} = "${bindir}/xwalk ${libdir}/xwalk/*"
-# FILES_${PN}-dbg = "${bindir}/.debug/ ${libdir}/xwalk/.debug/"
-# PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
+FILES_${PN} = "${bindir}/${PN} ${libdir}/${PN}/*"
+FILES_${PN}-dbg = "${libdir}/${PN}/.debug/"
+PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 
-INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
