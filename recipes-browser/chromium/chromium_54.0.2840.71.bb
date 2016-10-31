@@ -13,6 +13,15 @@ SRC_URI += " \
         file://v8-qemu-wrapper.patch \
         "
 
+# At the moment, this recipe has only been tested on i586, x86-64, ARMv6,
+# ARMv7a and aarch64.
+COMPATIBLE_MACHINE = "(-)"
+COMPATIBLE_MACHINE_aarch64 = "(.*)"
+COMPATIBLE_MACHINE_armv6 = "(.*)"
+COMPATIBLE_MACHINE_armv7a = "(.*)"
+COMPATIBLE_MACHINE_x86 = "(.*)"
+COMPATIBLE_MACHINE_x86-64 = "(.*)"
+
 DEPENDS = "\
     alsa-lib \
     atk \
