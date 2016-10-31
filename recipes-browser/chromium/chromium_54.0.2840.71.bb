@@ -148,10 +148,7 @@ addtask write_toolchain_file after do_patch before do_configure
 
 do_configure() {
 	cd ${S}
-
-	# ./build/linux/unbundle/remove_bundled_libraries.py ${THIRD_PARTY_TO_PRESERVE}
 	./build/linux/unbundle/replace_gn_files.py --system-libraries ${GN_UNBUNDLE_LIBS}
-
 	gn gen --args='${GN_ARGS}' "${OUTPUT_DIR}"
 }
 
