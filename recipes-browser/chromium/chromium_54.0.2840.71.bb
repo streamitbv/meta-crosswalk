@@ -2,7 +2,7 @@ require chromium.inc
 require chromium-unbundle.inc
 require gn-utils.inc
 
-inherit qemu
+inherit gtk-icon-cache qemu
 
 OUTPUT_DIR = "out/Release"
 B = "${S}/${OUTPUT_DIR}"
@@ -167,8 +167,28 @@ do_compile() {
 
 do_install() {
 	install -d ${D}${bindir}
+	install -d ${D}${datadir}
+	install -d ${D}${datadir}/applications
+	install -d ${D}${datadir}/icons
+	install -d ${D}${datadir}/icons/hicolor
 	install -d ${D}${libdir}/chromium
 	install -d ${D}${libdir}/chromium/locales
+
+	# Process and install Chromium's template .desktop file.
+	sed -e "s,@@MENUNAME@@,Chromium Browser,g" \
+	    -e "s,@@PACKAGE@@,chromium,g" \
+	    -e "s,@@USR_BIN_SYMLINK_NAME@@,chromium,g" \
+	    ${S}/chrome/installer/linux/common/desktop.template > chromium.desktop
+	install -m 0644 chromium.desktop ${D}${datadir}/applications
+
+	# Install icons.
+	for size in 22 24 48 64 128 256; do
+		install -d ${D}${datadir}/icons/hicolor/${size}x${size}
+		install -d ${D}${datadir}/icons/hicolor/${size}x${size}/apps
+		install -m 0644 \
+			${S}/chrome/app/theme/chromium/product_logo_${size}.png \
+			${D}${datadir}/icons/hicolor/${size}x${size}/apps/chromium.png
+	done
 
 	# A wrapper for the proprietary Google Chrome version already exists.
 	# We can just use that one instead of reinventing the wheel.
@@ -189,7 +209,12 @@ do_install() {
 	install -m 0644 locales/*.pak ${D}${libdir}/chromium/locales/
 }
 
-FILES_${PN} = "${bindir}/${PN} ${libdir}/${PN}/*"
+FILES_${PN} = " \
+        ${bindir}/${PN} \
+        ${datadir}/applications/${PN}.desktop \
+        ${datadir}/icons/hicolor/*x*/apps/chromium.png \
+        ${libdir}/${PN}/* \
+        "
 FILES_${PN}-dbg = "${libdir}/${PN}/.debug/"
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 
