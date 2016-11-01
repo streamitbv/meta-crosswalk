@@ -95,6 +95,21 @@ GN_ARGS += "enable_nacl=false"
 # let Yocto handle everything.
 GN_ARGS += "use_sysroot=false"
 
+# API keys for accessing Google services. By default, we use an invalid key
+# only to prevent the "you are missing an API key" infobar from being shown on
+# startup.
+# See https://dev.chromium.org/developers/how-tos/api-keys for more information
+# on how to obtain your own keys. You can then set the variables below in
+# local.conf or a .bbappend file.
+GOOGLE_API_KEY ??= "invalid-api-key"
+GOOGLE_DEFAULT_CLIENT_ID ??= "invalid-client-id"
+GOOGLE_DEFAULT_CLIENT_SECRET ??= "invalid-client-secret"
+GN_ARGS += '\
+        google_api_key="${GOOGLE_API_KEY}" \
+        google_default_client_id="${GOOGLE_DEFAULT_CLIENT_ID}" \
+        google_default_client_secret="${GOOGLE_DEFAULT_CLIENT_SECRET}" \
+        '
+
 # Toolchains we will use for the build. We need to point to the toolchain file
 # we've created, set the right target architecture and make sure we are not
 # using Chromium's toolchain (bundled clang, bundled binutils etc).
