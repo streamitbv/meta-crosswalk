@@ -67,6 +67,12 @@ DEPENDS_append_x86-64 = "yasm-native"
 # The wrapper script we use from upstream requires bash.
 RDEPENDS_${PN} = "bash"
 
+PACKAGECONFIG ??= ""
+PACKAGECONFIG[proprietary-codecs] = '\
+        ffmpeg_branding="Chrome" proprietary_codecs=true, \
+        ffmpeg_branding="Chromium" proprietary_codecs=false \
+        '
+
 # The generated debug chrome binary is too big (~5Gb) for 32-bit systems.
 # binutils, file and other utilities are unable to read it correctly and
 # extract the debugging symbols from it.
@@ -76,6 +82,7 @@ TARGET_CFLAGS_remove_armv7a = "${DEBUG_FLAGS}"
 
 # Base GN arguments, mostly related to features we want to enable or disable.
 GN_ARGS = "\
+        ${PACKAGECONFIG_CONFARGS} \
         is_debug=false \
         use_cups=false \
         use_gconf=false \
