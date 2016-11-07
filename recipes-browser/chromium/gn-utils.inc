@@ -59,11 +59,7 @@ def write_toolchain_file(d, file_path):
         'readelf': d.expand('${TARGET_PREFIX}readelf'),
         'extra_cflags': d.expand('${TARGET_CFLAGS}'),
         'extra_cppflags': d.expand('${TARGET_CPPFLAGS}'),
-        # -Wno-strict-overflow is used to avoid the following error in Blink:
-        # ../../third_party/WebKit/Source/wtf/dtoa/bignum.cc: In member function 'void WTF::double_conversion::Bignum::AssignDecimalString(WTF::double_conversion::Vector<const char>)':
-        # ../../third_party/WebKit/Source/wtf/dtoa/bignum.cc:104:10: error: assuming signed overflow does not occur when assuming that (X + c) < X is always false [-Werror=strict-overflow]
-        #      void Bignum::AssignDecimalString(Vector<const char> value) {
-        'extra_cxxflags': d.expand('${TARGET_CXXFLAGS} -Wno-strict-overflow'),
+        'extra_cxxflags': d.expand('${TARGET_CXXFLAGS}'),
         'extra_ldflags': d.expand('${TARGET_LDFLAGS}'),
     }
 

@@ -102,6 +102,12 @@ GN_ARGS += "enable_nacl=false"
 # let Yocto handle everything.
 GN_ARGS += "use_sysroot=false"
 
+# Upstream Chromium uses clang on Linux, and GCC is not regularly tested. This
+# means new GCC releases can introduce build failures as Chromium uses "-Wall
+# -Werror" by default and we do not have much control over which warnings GCC
+# decides to include in -Wall.
+GN_ARGS += "treat_warnings_as_errors=false"
+
 # API keys for accessing Google services. By default, we use an invalid key
 # only to prevent the "you are missing an API key" infobar from being shown on
 # startup.
