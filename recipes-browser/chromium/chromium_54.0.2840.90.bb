@@ -166,6 +166,7 @@ python do_create_v8_qemu_wrapper () {
 """ % qemu_cmd)
     os.chmod(wrapper_path, 0o755)
 }
+do_create_v8_qemu_wrapper[dirs] = "${B}"
 addtask create_v8_qemu_wrapper after do_patch before do_configure
 
 python do_write_toolchain_file () {
