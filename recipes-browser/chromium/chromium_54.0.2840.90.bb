@@ -38,7 +38,6 @@ DEPENDS = "\
     gtk+ \
     harfbuzz \
     jpeg \
-    libevent \
     libwebp \
     libx11 \
     libxcomposite \
