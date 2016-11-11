@@ -1,0 +1,20 @@
+Upstream-Status: Inappropriate [bugfix: https://bugzilla.yoctoproject.org/show_bug.cgi?id=10635]
+
+This is a workaround for the matchbox-window-manager bug referenced above,
+which causes a crash when Chromium is built with debug assertions enabled.
+
+Signed-off-by: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
+---
+diff --git a/chrome/browser/ui/browser_list.cc b/chrome/browser/ui/browser_list.cc
+index 74260b4..0ea67a6 100644
+--- a/chrome/browser/ui/browser_list.cc
++++ b/chrome/browser/ui/browser_list.cc
+@@ -193,7 +193,7 @@ void BrowserList::PostBeforeUnloadHandlers(
+ // static
+ void BrowserList::MoveBrowsersInWorkspaceToFront(
+     const std::string& new_workspace) {
+-  DCHECK(!new_workspace.empty());
++  // DCHECK(!new_workspace.empty());
+ 
+   BrowserList* instance = GetInstance();
+ 
