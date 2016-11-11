@@ -10,6 +10,7 @@ B = "${S}/${OUTPUT_DIR}"
 SRC_URI += " \
         file://0001-Build-error-in-chrome-browser-extensions-api-tabs-ta.patch \
         file://0001-Fix-Chrome-ARM64-linux-compilation-errors.patch \
+        file://0001-seccomp-bpf-Allow-MADV_FREE-in-madvise-2.patch \
         file://v8-qemu-wrapper.patch \
         file://yocto-bug10635.patch \
         "
