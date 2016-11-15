@@ -69,6 +69,9 @@ DEPENDS_append_x86-64 = "yasm-native"
 RDEPENDS_${PN} = "bash"
 
 PACKAGECONFIG ??= ""
+# proprietary-codecs: If enabled, this option will build Chromium with support
+# for additional codecs in FFMPEG (such as the MPEG-LA ones). It is your
+# responsibility to ensure you are complying with all required licenses.
 PACKAGECONFIG[proprietary-codecs] = '\
         ffmpeg_branding="Chrome" proprietary_codecs=true, \
         ffmpeg_branding="Chromium" proprietary_codecs=false \
