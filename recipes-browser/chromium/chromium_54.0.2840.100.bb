@@ -68,7 +68,9 @@ DEPENDS_append_x86-64 = "yasm-native"
 # The wrapper script we use from upstream requires bash.
 RDEPENDS_${PN} = "bash"
 
-PACKAGECONFIG ??= ""
+PACKAGECONFIG ??= "ftp webrtc"
+# ftp: Whether to build Chromium with support for the FTP protocol.
+PACKAGECONFIG[ftp] = "disable_ftp_support=false,disable_ftp_support=true"
 # proprietary-codecs: If enabled, this option will build Chromium with support
 # for additional codecs in FFMPEG (such as the MPEG-LA ones). It is your
 # responsibility to ensure you are complying with all required licenses.
@@ -76,6 +78,8 @@ PACKAGECONFIG[proprietary-codecs] = '\
         ffmpeg_branding="Chrome" proprietary_codecs=true, \
         ffmpeg_branding="Chromium" proprietary_codecs=false \
         '
+# webrtc: Whether to build Chromium with support for WebRTC.
+PACKAGECONFIG[webrtc] = "enable_werbtc=true,enable_webrtc=false"
 
 # The generated debug chrome binary is too big (~5Gb) for 32-bit systems.
 # binutils, file and other utilities are unable to read it correctly and
