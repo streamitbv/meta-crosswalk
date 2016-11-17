@@ -91,7 +91,6 @@ TARGET_CFLAGS_remove_armv7a = "${DEBUG_FLAGS}"
 # Base GN arguments, mostly related to features we want to enable or disable.
 GN_ARGS = "\
         ${PACKAGECONFIG_CONFARGS} \
-        is_debug=false \
         use_cups=false \
         use_gconf=false \
         use_gnome_keyring=false \
@@ -99,6 +98,15 @@ GN_ARGS = "\
         use_pulseaudio=${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'true', 'false', d)} \
         use_system_libjpeg=true \
         "
+
+# From Chromium's BUILDCONFIG.gn:
+# Set to enable the official build level of optimization. This has nothing
+# to do with branding, but enables an additional level of optimization above
+# release (!is_debug). This might be better expressed as a tri-state
+# (debug, release, official) but for historical reasons there are two
+# separate flags.
+# See also: https://groups.google.com/a/chromium.org/d/msg/chromium-dev/hkcb6AOX5gE/PPT1ukWoBwAJ
+GN_ARGS += "is_debug=false is_official_build=true"
 
 # NaCl support depends on the NaCl toolchain that needs to be built before NaCl
 # itself. The whole process is quite cumbersome so we just disable the whole
