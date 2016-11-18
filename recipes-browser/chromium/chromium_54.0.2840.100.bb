@@ -108,6 +108,13 @@ GN_ARGS = "\
 # See also: https://groups.google.com/a/chromium.org/d/msg/chromium-dev/hkcb6AOX5gE/PPT1ukWoBwAJ
 GN_ARGS += "is_debug=false is_official_build=true"
 
+# Disable Chrome Remote Desktop (aka Chromoting) support. Building host support
+# (so that the machine running this recipe can be controlled remotely from
+# another machine) requires additional effort to build some extra binaries,
+# whereas connecting to other machines requires building and installing a
+# Chrome extension (it is not clear how to do that automatically).
+GN_ARGS += "enable_remoting=false"
+
 # NaCl support depends on the NaCl toolchain that needs to be built before NaCl
 # itself. The whole process is quite cumbersome so we just disable the whole
 # thing for now.
