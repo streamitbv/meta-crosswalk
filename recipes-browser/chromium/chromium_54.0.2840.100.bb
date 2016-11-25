@@ -13,6 +13,7 @@ SRC_URI += " \
         file://0001-seccomp-bpf-Allow-MADV_FREE-in-madvise-2.patch \
         file://v8-qemu-wrapper.patch \
         file://yocto-bug10635.patch \
+        ${@bb.utils.contains('PACKAGECONFIG', 'root-profile', 'file://root-user-profile.patch', '', d)} \
         "
 
 # At the moment, this recipe has only been tested on i586, x86-64, ARMv6,
@@ -78,6 +79,11 @@ PACKAGECONFIG[proprietary-codecs] = '\
         ffmpeg_branding="Chrome" proprietary_codecs=true, \
         ffmpeg_branding="Chromium" proprietary_codecs=false \
         '
+# root-profile: If enabled, adds a patch to the Chromium binary wrapper that
+# automatically sets root's user profile directory to /root/chromium-profile.
+# DO NOT USE IN PRODUCTION: this is only supposed to ease debugging and
+# testing.
+PACKAGECONFIG[root-profile] = ",,,"
 # webrtc: Whether to build Chromium with support for WebRTC.
 PACKAGECONFIG[webrtc] = "enable_werbtc=true,enable_webrtc=false"
 
