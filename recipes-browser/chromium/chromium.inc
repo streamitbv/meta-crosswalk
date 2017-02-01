@@ -2,8 +2,8 @@ DESCRIPTION = "Chromium is an open-source browser project that aims to build a s
 HOMEPAGE = "https://www.chromium.org/Home"
 
 SRC_URI = "https://commondatastorage.googleapis.com/chromium-browser-official/chromium-${PV}.tar.xz"
-SRC_URI[md5sum] = "c389ad65365d76b36cb56952e76835e4"
-SRC_URI[sha256sum] = "e81bd3140d9c84dfee04d9a94686dfe6a20ae79475d84f17154c5536dcb81a58"
+SRC_URI[md5sum] = "db1efe3e0c843e4237052432f2a46d58"
+SRC_URI[sha256sum] = "cfb08e226b9c16ad887eb96d715a9cc4ab097d1a79e2e68c8749a7a4164b3c38"
 
 # Chromium itself is licensed under the 3-clause BSD license. However, it
 # depends upon several other projects whose copyright files are listed in
@@ -63,7 +63,7 @@ LIC_FILES_CHKSUM = "\
     file://${S}/third_party/ashmem/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57 \
     file://${S}/third_party/blimp_fonts/LICENSE;md5=ba7335e18ef63200c68a247dcdfd6a93 \
     file://${S}/third_party/boringssl/src/LICENSE;md5=7707289753aa39daf59ecd93d0164faf \
-    file://${S}/third_party/brotli/LICENSE;md5=0b99a0de24f591a89060ac1fba836c4d \
+    file://${S}/third_party/brotli/LICENSE;md5=941ee9cd1609382f946352712a319b4b \
     file://${S}/third_party/bspatch/LICENSE;md5=3e837ede9697ce4c789c3ca32aabe003 \
     file://${S}/third_party/cacheinvalidation/src/google/cacheinvalidation/COPYING;md5=3b83ef96387f14655fc854ddc3c6bd57 \
     file://${S}/third_party/ced/LICENSE;md5=3947f60c9d4b1ba51d193af511855a55 \
@@ -79,7 +79,7 @@ LIC_FILES_CHKSUM = "\
     file://${S}/third_party/dom_distiller_js/LICENSE;md5=1399a5b89c7ed8167d261770432511e8 \
     file://${S}/third_party/errorprone/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57 \
     file://${S}/third_party/expat/files/COPYING;md5=1b71f681713d1256e1c23b0890920874 \
-    file://${S}/third_party/ffmpeg/CREDITS.chromium;md5=aac202a7da3e3daa2722c42c386a6075 \
+    file://${S}/third_party/ffmpeg/CREDITS.chromium;md5=9c185c8a01c40f37d3864605e2e80fee \
     file://${S}/third_party/fips181/COPYING;md5=da26b18c1a03a3cae0abccae554029c6 \
     file://${S}/third_party/flac/COPYING.Xiph;md5=a2c4b71c0198682376d483eb5bcc9197 \
     file://${S}/third_party/flatbuffers/LICENSE;md5=a873c5645c184d51e0f9b34e1d7cf559 \
@@ -98,7 +98,8 @@ LIC_FILES_CHKSUM = "\
     file://${S}/third_party/hwcplus/LICENSE;md5=537e0b52077bf0a616d0a0c8a79bc9d5 \
     file://${S}/third_party/iaccessible2/LICENSE;md5=43bbd0bfb581347ec10def720000a645 \
     file://${S}/third_party/iccjpeg/LICENSE;md5=26834d132689a03abf860f4572705494 \
-    file://${S}/third_party/icu/LICENSE;md5=a5a67c5062cd225de7a4401643633750 \
+    file://${S}/third_party/icu/LICENSE;md5=1b3b75c1777cd49ad5c6a24cd338cfc9 \
+    file://${S}/third_party/inspector_protocol/LICENSE;md5=db90dcb101891a7285d25f2fbceca752 \
     file://${S}/third_party/isimpledom/LICENSE;md5=822502c0e010ccdbb6a3e681dd47888e \
     file://${S}/third_party/jsoncpp/LICENSE;md5=c56ee55c03a55f8105b969d8270632ce \
     file://${S}/third_party/jstemplate/COPYING;md5=3b83ef96387f14655fc854ddc3c6bd57 \
@@ -116,7 +117,7 @@ LIC_FILES_CHKSUM = "\
     file://${S}/third_party/libphonenumber/LICENSE;md5=e23fadd6ceef8c618fc1c65191d846fa \
     file://${S}/third_party/libpng/LICENSE;md5=b3edd1241cafd9e736d04c08d5017ff4 \
     file://${S}/third_party/libsecret/LICENSE;md5=23c2a5e0106b99d75238986559bb5fc6 \
-    file://${S}/third_party/libsrtp/srtp/LICENSE;md5=15bc16b9d2e305974dde47e733883714 \
+    file://${S}/third_party/libsrtp/LICENSE;md5=15bc16b9d2e305974dde47e733883714 \
     file://${S}/third_party/libsync/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57 \
     file://${S}/third_party/libudev/LICENSE;md5=4fbd65380cdd255951079008b364516c \
     file://${S}/third_party/libusb/src/COPYING;md5=fbc093901857fcd118f065f900982c24 \

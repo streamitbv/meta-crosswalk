@@ -8,7 +8,7 @@ OUTPUT_DIR = "out/Release"
 B = "${S}/${OUTPUT_DIR}"
 
 SRC_URI += " \
-        file://0001-seccomp-bpf-Allow-MADV_FREE-in-madvise-2.patch \
+        file://0001-Buildfix-Fix-enable_webrtc-false-build.patch \
         file://v8-qemu-wrapper.patch \
         file://yocto-bug10635.patch \
         ${@bb.utils.contains('PACKAGECONFIG', 'root-profile', 'file://root-user-profile.patch', '', d)} \
