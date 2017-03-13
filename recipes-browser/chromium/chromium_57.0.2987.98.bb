@@ -8,7 +8,6 @@ OUTPUT_DIR = "out/Release"
 B = "${S}/${OUTPUT_DIR}"
 
 SRC_URI += " \
-        file://0001-Buildfix-Fix-enable_webrtc-false-build.patch \
         file://v8-qemu-wrapper.patch \
         file://yocto-bug10635.patch \
         ${@bb.utils.contains('PACKAGECONFIG', 'root-profile', 'file://root-user-profile.patch', '', d)} \
@@ -134,6 +133,12 @@ GN_ARGS += "use_sysroot=false"
 # -Werror" by default and we do not have much control over which warnings GCC
 # decides to include in -Wall.
 GN_ARGS += "treat_warnings_as_errors=false"
+
+# Starting with M57 and https://codereview.chromium.org/2621193003,
+# link-time optimization (LTO) is enabled by default on Linux x86_64
+# builds, but the options are clang-specific and the builds are only
+# tested with clang upstream.
+GN_ARGS += "allow_posix_link_time_opt=false"
 
 # API keys for accessing Google services. By default, we use an invalid key
 # only to prevent the "you are missing an API key" infobar from being shown on
