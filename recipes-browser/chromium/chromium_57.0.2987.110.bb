@@ -140,6 +140,11 @@ GN_ARGS += "treat_warnings_as_errors=false"
 # tested with clang upstream.
 GN_ARGS += "allow_posix_link_time_opt=false"
 
+# Disable activation of field trial tests that can cause problems in
+# production.
+# See https://groups.google.com/a/chromium.org/d/msg/chromium-packagers/ECWC57W7E0k/9Kc5UAmyDAAJ
+GN_ARGS += "fieldtrial_testing_like_official_build=true"
+
 # API keys for accessing Google services. By default, we use an invalid key
 # only to prevent the "you are missing an API key" infobar from being shown on
 # startup.
