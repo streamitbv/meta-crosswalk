@@ -6,6 +6,10 @@ We refer to the web browser as Chromium, not Chrome, because "Chrome" is
 Google's version of the web browser with proprietary content on top of the
 open-source Chromium browser.
 
+Since Chromium 58.0.3029.81, there is a build-time dependency on nodejs, which
+is run on the host to preprocess a few files. This recipe has been tested with
+the nodejs recipe from https://github.com/ostroproject/meta-iot-web.
+
 Compared to a usual, smaller recipe, the Chromium recipe has a few
 peculiarities:
 - The Chromium binary is built without debug symbols on 32-bit target

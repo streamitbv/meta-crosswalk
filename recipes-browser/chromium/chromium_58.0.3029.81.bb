@@ -51,6 +51,7 @@ DEPENDS = "\
     libxslt \
     libxtst \
     ninja-native \
+    nodejs-native \
     nspr \
     nss \
     pango \
@@ -220,6 +221,20 @@ python do_write_toolchain_file () {
     write_toolchain_file(d, toolchain_file)
 }
 addtask write_toolchain_file after do_patch before do_configure
+
+do_add_nodejs_symlink () {
+	# Adds a symlink to the node binary to the location expected by
+	# Chromium's build system.
+	chromium_node_dir="${S}/third_party/node/linux/node-linux-x64/bin"
+	nodejs_native_path="${STAGING_BINDIR_NATIVE}/node"
+	mkdir -p "${chromium_node_dir}"
+	if [ ! -f "${nodejs_native_path}" ]; then
+		echo "${nodejs_native_path} does not exist."
+		exit 1
+	fi
+	ln -sf "${nodejs_native_path}" "${chromium_node_dir}/node"
+}
+addtask add_nodejs_symlink after do_configure before do_build
 
 do_configure() {
 	cd ${S}
