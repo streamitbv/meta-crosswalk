@@ -23,6 +23,8 @@ SRC_URI += " \
 # some of the arguments passed to it.
 BUILD_LD = "${CXX}"
 
+DEPENDS = "ninja-native"
+
 do_configure[noexec] = "1"
 
 do_compile() {
