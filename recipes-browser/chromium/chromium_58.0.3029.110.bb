@@ -33,6 +33,7 @@ DEPENDS = "\
     freetype \
     glib-2.0 \
     gn-native \
+    gperf-native \
     gtk+ \
     harfbuzz \
     jpeg \
