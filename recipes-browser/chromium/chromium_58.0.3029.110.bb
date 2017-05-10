@@ -234,7 +234,7 @@ do_add_nodejs_symlink () {
 	fi
 	ln -sf "${nodejs_native_path}" "${chromium_node_dir}/node"
 }
-addtask add_nodejs_symlink after do_configure before do_build
+addtask add_nodejs_symlink after do_configure before do_compile
 
 do_configure() {
 	cd ${S}
