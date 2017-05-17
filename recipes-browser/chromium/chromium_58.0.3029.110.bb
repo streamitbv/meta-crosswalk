@@ -86,13 +86,6 @@ PACKAGECONFIG[root-profile] = ",,,"
 # webrtc: Whether to build Chromium with support for WebRTC.
 PACKAGECONFIG[webrtc] = "enable_werbtc=true,enable_webrtc=false"
 
-# The generated debug chrome binary is too big (~5Gb) for 32-bit systems.
-# binutils, file and other utilities are unable to read it correctly and
-# extract the debugging symbols from it.
-TARGET_CFLAGS_remove_i586 = "${DEBUG_FLAGS}"
-TARGET_CFLAGS_remove_armv6 = "${DEBUG_FLAGS}"
-TARGET_CFLAGS_remove_armv7a = "${DEBUG_FLAGS}"
-
 # Base GN arguments, mostly related to features we want to enable or disable.
 GN_ARGS = "\
         ${PACKAGECONFIG_CONFARGS} \
@@ -112,6 +105,28 @@ GN_ARGS = "\
 # separate flags.
 # See also: https://groups.google.com/a/chromium.org/d/msg/chromium-dev/hkcb6AOX5gE/PPT1ukWoBwAJ
 GN_ARGS += "is_debug=false is_official_build=true"
+
+# By default, passing is_official_build=true to GN causes its symbol_level
+# variable to be set to "2". This means the compiler will be passed "-g2" and
+# we will end up with a very large chrome binary (around 5Gb as of M58)
+# regardless of whether DEBUG_BUILD has been set or not. In addition, binutils,
+# file and other utilities are unable to read a 32-bit binary this size, which
+# causes it not to be stripped.
+# The solution is two-fold:
+# 1. Make sure -g is not passed on 32-bit architectures via DEBUG_FLAGS. -g is
+#    the same as -g2. -g1 generates an 800MB binary, which is a lot more
+#    manageable.
+# 2. Explicitly pass symbol_level=0 to GN. This causes -g0 to be passed
+#    instead, so that if DEBUG_BUILD is not set GN will not create a huge debug
+#    binary anyway. Since our compiler flags are passed after GN's, -g0 does
+#    not cause any issues if DEBUG_BUILD is set, as -g1 will be passed later.
+DEBUG_FLAGS_remove_i586 = "-g"
+DEBUG_FLAGS_append_i586 = "-g1"
+DEBUG_FLAGS_remove_armv6 = "-g"
+DEBUG_FLAGS_append_armv6 = "-g1"
+DEBUG_FLAGS_remove_armv7a = "-g"
+DEBUG_FLAGS_append_armv7a = "-g1"
+GN_ARGS += "symbol_level=0"
 
 # Disable Chrome Remote Desktop (aka Chromoting) support. Building host support
 # (so that the machine running this recipe can be controlled remotely from

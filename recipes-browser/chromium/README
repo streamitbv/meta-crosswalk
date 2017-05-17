@@ -12,9 +12,11 @@ the nodejs recipe from https://github.com/ostroproject/meta-iot-web.
 
 Compared to a usual, smaller recipe, the Chromium recipe has a few
 peculiarities:
-- The Chromium binary is built without debug symbols on 32-bit target
-  architectures, as the generated binary gets too large for the information to
-  be properly contained in the ELF32 headers of the binary.
+- When DEBUG_BUILD is set, the Chromium binary is built with fewer debug
+  symbols on 32-bit target architectures (i.e. the compiler is passed "-g1"
+  instead of "-g"), as a binary with full debugging symbols is too big (~5Gb as
+  of M58) for the information to be properly contained in the ELF32 headers of
+  the binary, which breaks binutils and file(1).
 - We manually patch parts of the build system to replace Chromium's bundled
   copies of some packages (flac, libjpeg and others) with system-wide ones.
 - Parts of the V8 (Chromium's JavaScript engine) build need to run binaries
