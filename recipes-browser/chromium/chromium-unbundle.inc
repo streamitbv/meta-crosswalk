@@ -2,7 +2,6 @@
 # system-wide counterparts.
 GN_UNBUNDLE_LIBS = " \
         flac \
-        harfbuzz-ng \
         libjpeg \
         libwebp \
         libxml \

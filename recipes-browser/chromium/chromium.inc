@@ -2,8 +2,8 @@ DESCRIPTION = "Chromium is an open-source browser project that aims to build a s
 HOMEPAGE = "https://www.chromium.org/Home"
 
 SRC_URI = "https://commondatastorage.googleapis.com/chromium-browser-official/chromium-${PV}.tar.xz"
-SRC_URI[md5sum] = "aca4aeff806e1230912aa9c9df6b7be7"
-SRC_URI[sha256sum] = "f24cef3dd2acf9dd5ccdeeca47fea42d1c1ddff32b7375dc9e0cd35a4e8d78ff"
+SRC_URI[md5sum] = "3a2ad41fc23a569255f18ccacaf744e4"
+SRC_URI[sha256sum] = "c31431aa9f4ae521d784bee89792e7fa05793cb822bfb8d3fbacaf414b29ace7"
 
 # Chromium itself is licensed under the 3-clause BSD license. However, it
 # depends upon several other projects whose copyright files are listed in
@@ -88,7 +88,7 @@ LIC_FILES_CHKSUM = "\
     file://${S}/third_party/flatbuffers/LICENSE;md5=a873c5645c184d51e0f9b34e1d7cf559 \
     file://${S}/third_party/flot/LICENSE.txt;md5=fe1ea2158d814e4fc7227c8c6ccd7ab3 \
     file://${S}/third_party/fontconfig/src/COPYING;md5=7a0449e9bc5370402a94c00204beca3d \
-    file://${S}/third_party/freetype-android/src/docs/FTL.TXT;md5=13b25413274c9b3b09b63e4028216ff4 \
+    file://${S}/third_party/freetype/src/docs/FTL.TXT;md5=13b25413274c9b3b09b63e4028216ff4 \
     file://${S}/third_party/gestures/LICENSE;md5=8a978a7211275297a3d816117be58ebf \
     file://${S}/third_party/gif_player/LICENSE;md5=86d3f3a95c324c9479bd8986968f4327 \
     file://${S}/third_party/glslang/LICENSE;md5=ce523927d7bcd789d6c3af579d03ad73 \
@@ -119,6 +119,7 @@ LIC_FILES_CHKSUM = "\
     file://${S}/third_party/liblouis/LICENSE;md5=8ab69863de0d3a0e00c4f97a4d78dd4a \
     file://${S}/third_party/libphonenumber/LICENSE;md5=e23fadd6ceef8c618fc1c65191d846fa \
     file://${S}/third_party/libpng/LICENSE;md5=b3edd1241cafd9e736d04c08d5017ff4 \
+    file://${S}/third_party/libprotobuf-mutator/src/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57 \
     file://${S}/third_party/libsecret/LICENSE;md5=23c2a5e0106b99d75238986559bb5fc6 \
     file://${S}/third_party/libsrtp/LICENSE;md5=15bc16b9d2e305974dde47e733883714 \
     file://${S}/third_party/libsync/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57 \
@@ -156,7 +157,7 @@ LIC_FILES_CHKSUM = "\
     file://${S}/third_party/simplejson/LICENSE.txt;md5=8a9f8dcfcd28c34daa443e5b1d29813b \
     file://${S}/third_party/skia/LICENSE;md5=d25bb58a1be2e1af9b58d31565a206dc \
     file://${S}/third_party/smhasher/LICENSE;md5=0d948322ab524e2b74f55eb8ef57c74a \
-    file://${S}/third_party/snappy/src/COPYING;md5=d4395b19c5d390309ac1c314d9966e9e \
+    file://${S}/third_party/snappy/src/COPYING;md5=f62f3080324a97b3159a7a7e61812d0c \
     file://${S}/third_party/speech-dispatcher/COPYING;md5=5828ebb4b7590269a994ed46b0a70df0 \
     file://${S}/third_party/sqlite/LICENSE;md5=7256769d4613c0af5a72be32ba20ccf7 \
     file://${S}/third_party/sudden_motion_sensor/LICENSE;md5=6f89397ba4dda73a940f27f76e9ad9d4 \

@@ -1,0 +1,44 @@
+Upstream-Status: Backport
+
+The patch below allows GTK+3 to be used across all architectures.
+
+Signed-off-by: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
+---
+From 94297f25fdf492db4eedd9524c413c7566994567 Mon Sep 17 00:00:00 2001
+From: thomasanderson <thomasanderson@google.com>
+Date: Fri, 28 Apr 2017 13:25:32 -0700
+Subject: [PATCH] Enable gtk3 for 32-bit builds
+
+Now that [1] has been fixed and libgtk-3-0 has been installed in
+clusterfuzz's 32-bit configuration, it's safe to enable gtk3 for all
+platforms.
+
+[1] https://crbug.com/699669
+
+BUG=79722
+TBR=dpranke@chromium.org
+CC=erg@chromium.org,inferno@chromium.org
+
+Review-Url: https://codereview.chromium.org/2847863002
+Cr-Commit-Position: refs/heads/master@{#468110}
+---
+ build/config/linux/gtk/gtk.gni | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/build/config/linux/gtk/gtk.gni b/build/config/linux/gtk/gtk.gni
+index 0521a8c..53e943e 100644
+--- a/build/config/linux/gtk/gtk.gni
++++ b/build/config/linux/gtk/gtk.gni
+@@ -8,8 +8,5 @@
+ 
+ declare_args() {
+   # Whether to compile against GTKv3 instead of GTKv2.
+-  # TODO(thomasanderson): Currently, the 32-bit clusterfuzz schroot does not
+-  # have libgtk-3-0 installed.  set use_gtk3 = true on all architectures when
+-  # the package is added (crbug.com/699669).
+-  use_gtk3 = target_cpu == "x64"
++  use_gtk3 = true
+ }
+-- 
+2.9.4
+

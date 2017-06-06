@@ -10,6 +10,8 @@ B = "${S}/${OUTPUT_DIR}"
 SRC_URI += " \
         file://v8-qemu-wrapper.patch \
         file://yocto-bug10635.patch \
+        file://0001-Enable-gtk3-for-32-bit-builds.patch \
+        file://0001-Fix-kernel-version-condition-for-including-dma-buf.h.patch \
         ${@bb.utils.contains('PACKAGECONFIG', 'root-profile', 'file://root-user-profile.patch', '', d)} \
         "
 
@@ -34,8 +36,7 @@ DEPENDS = "\
     glib-2.0 \
     gn-native \
     gperf-native \
-    gtk+ \
-    harfbuzz \
+    gtk+3 \
     jpeg \
     libwebp \
     libx11 \
@@ -68,7 +69,7 @@ DEPENDS_append_x86-64 = "yasm-native"
 # The wrapper script we use from upstream requires bash.
 RDEPENDS_${PN} = "bash"
 
-PACKAGECONFIG ??= "ftp webrtc"
+PACKAGECONFIG ??= "ftp"
 # ftp: Whether to build Chromium with support for the FTP protocol.
 PACKAGECONFIG[ftp] = "disable_ftp_support=false,disable_ftp_support=true"
 # proprietary-codecs: If enabled, this option will build Chromium with support
@@ -84,7 +85,8 @@ PACKAGECONFIG[proprietary-codecs] = '\
 # testing.
 PACKAGECONFIG[root-profile] = ",,,"
 # webrtc: Whether to build Chromium with support for WebRTC.
-PACKAGECONFIG[webrtc] = "enable_werbtc=true,enable_webrtc=false"
+# Disabled in M59 due to http://crbug.com/730019
+# PACKAGECONFIG[webrtc] = "enable_werbtc=true,enable_webrtc=false"
 
 # Base GN arguments, mostly related to features we want to enable or disable.
 GN_ARGS = "\
