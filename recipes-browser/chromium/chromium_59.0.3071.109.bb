@@ -12,6 +12,7 @@ SRC_URI += " \
         file://yocto-bug10635.patch \
         file://0001-Enable-gtk3-for-32-bit-builds.patch \
         file://0001-Fix-kernel-version-condition-for-including-dma-buf.h.patch \
+        file://0001-WebrtcAudioPrivateSetAudioExperimentsFunction-dummy-.patch \
         ${@bb.utils.contains('PACKAGECONFIG', 'root-profile', 'file://root-user-profile.patch', '', d)} \
         "
 
@@ -69,7 +70,7 @@ DEPENDS_append_x86-64 = "yasm-native"
 # The wrapper script we use from upstream requires bash.
 RDEPENDS_${PN} = "bash"
 
-PACKAGECONFIG ??= "ftp"
+PACKAGECONFIG ??= "ftp webrtc"
 # ftp: Whether to build Chromium with support for the FTP protocol.
 PACKAGECONFIG[ftp] = "disable_ftp_support=false,disable_ftp_support=true"
 # proprietary-codecs: If enabled, this option will build Chromium with support
@@ -85,8 +86,7 @@ PACKAGECONFIG[proprietary-codecs] = '\
 # testing.
 PACKAGECONFIG[root-profile] = ",,,"
 # webrtc: Whether to build Chromium with support for WebRTC.
-# Disabled in M59 due to http://crbug.com/730019
-# PACKAGECONFIG[webrtc] = "enable_werbtc=true,enable_webrtc=false"
+PACKAGECONFIG[webrtc] = "enable_werbtc=true,enable_webrtc=false"
 
 # Base GN arguments, mostly related to features we want to enable or disable.
 GN_ARGS = "\
