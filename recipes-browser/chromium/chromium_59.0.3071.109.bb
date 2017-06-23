@@ -86,7 +86,7 @@ PACKAGECONFIG[proprietary-codecs] = '\
 # testing.
 PACKAGECONFIG[root-profile] = ",,,"
 # webrtc: Whether to build Chromium with support for WebRTC.
-PACKAGECONFIG[webrtc] = "enable_werbtc=true,enable_webrtc=false"
+PACKAGECONFIG[webrtc] = "enable_webrtc=true,enable_webrtc=false"
 
 # Base GN arguments, mostly related to features we want to enable or disable.
 GN_ARGS = "\
