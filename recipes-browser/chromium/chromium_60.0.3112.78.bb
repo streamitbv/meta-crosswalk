@@ -10,8 +10,6 @@ B = "${S}/${OUTPUT_DIR}"
 SRC_URI += " \
         file://v8-qemu-wrapper.patch \
         file://yocto-bug10635.patch \
-        file://0001-Enable-gtk3-for-32-bit-builds.patch \
-        file://0001-Fix-kernel-version-condition-for-including-dma-buf.h.patch \
         file://0001-WebrtcAudioPrivateSetAudioExperimentsFunction-dummy-.patch \
         ${@bb.utils.contains('PACKAGECONFIG', 'root-profile', 'file://root-user-profile.patch', '', d)} \
         "
@@ -56,7 +54,9 @@ DEPENDS = "\
     ninja-native \
     nodejs-native \
     nspr \
+    nspr-native \
     nss \
+    nss-native \
     pango \
     pciutils \
     pkgconfig-native \
