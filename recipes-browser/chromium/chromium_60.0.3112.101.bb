@@ -130,6 +130,14 @@ DEBUG_FLAGS_remove_armv7a = "-g"
 DEBUG_FLAGS_append_armv7a = "-g1"
 GN_ARGS += "symbol_level=0"
 
+# As of Chromium 60.0.3112.101 and Yocto Pyro (GCC 6, binutils 2.28), passing
+# -g to the compiler results in many linker errors on x86_64, such as:
+# obj/third_party/WebKit/Source/core/loader/libloader.a(ModuleTreeLinker.o)(.debug_loc+0x1e9a5): error: relocation overflow: reference to local symbol 82 in obj/third_party/WebKit/Source/core/loader/libloader.a(ModuleTreeLinker.o)
+# obj/third_party/WebKit/Source/core/libcore_generated.a(ScriptModule.o)(.debug_loc+0x253c): error: relocation overflow: reference to local symbol 31 in obj/third_party/WebKit/Source/core/libcore_generated.a(ScriptModule.o)
+# so we have to use the same hack described above.
+DEBUG_FLAGS_remove_x86-64 = "-g"
+DEBUG_FLAGS_append_x86-64 = "-g1"
+
 # Disable Chrome Remote Desktop (aka Chromoting) support. Building host support
 # (so that the machine running this recipe can be controlled remotely from
 # another machine) requires additional effort to build some extra binaries,
