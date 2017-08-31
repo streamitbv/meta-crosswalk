@@ -1,0 +1,11 @@
+--- a/v8/src/objects-body-descriptors.h	2017-07-25 21:06:36.000000000 +0200
++++ b/v8/src/objects-body-descriptors.h	2017-08-03 13:42:42.862095586 +0200
+@@ -99,7 +99,7 @@
+ 
+   template <typename StaticVisitor>
+   static inline void IterateBody(HeapObject* obj, int object_size) {
+-    IterateBody(obj);
++    IterateBody<StaticVisitor>(obj);
+   }
+ 
+   static inline int SizeOf(Map* map, HeapObject* object) { return kSize; }

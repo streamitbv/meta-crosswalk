@@ -11,17 +11,12 @@ SRC_URI += " \
         file://v8-qemu-wrapper.patch \
         file://yocto-bug10635.patch \
         file://0001-WebrtcAudioPrivateSetAudioExperimentsFunction-dummy-.patch \
+        file://0002-Change-ucontext-structs-to-typedefs.patch \
+        file://0005-remove-xml-noxxe.patch \
+        file://0006-Fix-v8-build-gcc7.patch \
+        file://0007-Fix-WebKit-build-gcc7.patch \
         ${@bb.utils.contains('PACKAGECONFIG', 'root-profile', 'file://root-user-profile.patch', '', d)} \
         "
-
-# At the moment, this recipe has only been tested on i586, x86-64, ARMv6,
-# ARMv7a and aarch64.
-COMPATIBLE_MACHINE = "(-)"
-COMPATIBLE_MACHINE_aarch64 = "(.*)"
-COMPATIBLE_MACHINE_armv6 = "(.*)"
-COMPATIBLE_MACHINE_armv7a = "(.*)"
-COMPATIBLE_MACHINE_x86 = "(.*)"
-COMPATIBLE_MACHINE_x86-64 = "(.*)"
 
 DEPENDS = "\
     alsa-lib \
@@ -52,7 +47,6 @@ DEPENDS = "\
     libxslt \
     libxtst \
     ninja-native \
-    nodejs-native \
     nspr \
     nspr-native \
     nss \
@@ -252,7 +246,7 @@ do_add_nodejs_symlink () {
 	# Adds a symlink to the node binary to the location expected by
 	# Chromium's build system.
 	chromium_node_dir="${S}/third_party/node/linux/node-linux-x64/bin"
-	nodejs_native_path="${STAGING_BINDIR_NATIVE}/node"
+	nodejs_native_path="/usr/bin/nodejs"
 	mkdir -p "${chromium_node_dir}"
 	if [ ! -f "${nodejs_native_path}" ]; then
 		echo "${nodejs_native_path} does not exist."
