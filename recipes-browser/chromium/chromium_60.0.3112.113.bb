@@ -96,6 +96,7 @@ GN_ARGS = "\
         use_gnome_keyring=false \
         use_kerberos=false \
         use_pulseaudio=${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'true', 'false', d)} \
+        use_system_freetype=true \
         use_system_libjpeg=true \
         "
 
