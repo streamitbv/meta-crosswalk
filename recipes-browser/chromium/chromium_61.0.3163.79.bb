@@ -10,7 +10,8 @@ B = "${S}/${OUTPUT_DIR}"
 SRC_URI += " \
         file://v8-qemu-wrapper.patch \
         file://yocto-bug10635.patch \
-        file://0001-WebrtcAudioPrivateSetAudioExperimentsFunction-dummy-.patch \
+        file://0001-Make-base-numerics-build-with-GCC.patch \
+        file://0001-Fix-compilation-for-ATK-accessibility.patch \
         ${@bb.utils.contains('PACKAGECONFIG', 'root-profile', 'file://root-user-profile.patch', '', d)} \
         "
 
@@ -108,6 +109,11 @@ GN_ARGS = "\
 # separate flags.
 # See also: https://groups.google.com/a/chromium.org/d/msg/chromium-dev/hkcb6AOX5gE/PPT1ukWoBwAJ
 GN_ARGS += "is_debug=false is_official_build=true"
+
+# Starting with M61, Chromium defaults to building with its own copy of libc++
+# instead of the system's libstdc++. Explicitly disable this behavior.
+# https://groups.google.com/a/chromium.org/d/msg/chromium-packagers/8aYO3me2SCE/SZ8pJXhZAwAJ
+GN_ARGS += "use_custom_libcxx=false"
 
 # By default, passing is_official_build=true to GN causes its symbol_level
 # variable to be set to "2". This means the compiler will be passed "-g2" and

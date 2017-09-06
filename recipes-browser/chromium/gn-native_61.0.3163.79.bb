@@ -16,6 +16,7 @@ B = "${S}/out_bootstrap"
 
 SRC_URI += " \
         file://0001-Fix-GN-bootstrap.patch \
+        file://0001-Make-base-numerics-build-with-GCC.patch \
         "
 
 # The build system expects the linker to be invoked via the compiler. If we use
