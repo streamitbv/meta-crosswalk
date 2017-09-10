@@ -7,6 +7,8 @@ inherit gtk-icon-cache qemu
 OUTPUT_DIR = "out/Release"
 B = "${S}/${OUTPUT_DIR}"
 
+EXTERNALSRC_BUILD = "${EXTERNALSRC}/${OUTPUT_DIR}"
+
 SRC_URI += " \
         file://v8-qemu-wrapper.patch \
         file://yocto-bug10635.patch \
@@ -100,7 +102,7 @@ GN_ARGS = "\
 # (debug, release, official) but for historical reasons there are two
 # separate flags.
 # See also: https://groups.google.com/a/chromium.org/d/msg/chromium-dev/hkcb6AOX5gE/PPT1ukWoBwAJ
-GN_ARGS += "is_debug=false is_official_build=true"
+GN_ARGS += "is_debug=false"
 
 # By default, passing is_official_build=true to GN causes its symbol_level
 # variable to be set to "2". This means the compiler will be passed "-g2" and
@@ -122,7 +124,14 @@ DEBUG_FLAGS_remove_armv6 = "-g"
 DEBUG_FLAGS_append_armv6 = "-g1"
 DEBUG_FLAGS_remove_armv7a = "-g"
 DEBUG_FLAGS_append_armv7a = "-g1"
+DEBUG_FLAGS_remove_armv7ve = "-g"
+DEBUG_FLAGS_remove_armv7ve = "-g1"
+
 GN_ARGS += "symbol_level=0"
+
+GN_ARGS += "is_component_build=true"
+
+GN_ARGS += "remove_webcore_debug_symbols=true"
 
 # As of Chromium 60.0.3112.101 and Yocto Pyro (GCC 6, binutils 2.28), passing
 # -g to the compiler results in many linker errors on x86_64, such as:
@@ -205,6 +214,8 @@ GN_ARGS_append_armv6 += 'use_allocator="none"'
 # https://bugs.chromium.org/p/webrtc/issues/detail?id=6574
 GN_ARGS_append_armv6 += 'arm_use_neon=false'
 
+INSANE_SKIP_${PN} += "dev-so"
+
 # V8's JIT infrastructure requires binaries such as mksnapshot and
 # mkpeephole to be run in the host during the build. However, these
 # binaries must have the same bit-width as the target (e.g. a x86_64
@@ -263,7 +274,8 @@ do_configure() {
 }
 
 do_compile() {
-	ninja -v "${PARALLEL_MAKE}" chrome chrome_sandbox
+    echo ${EXTERNALSRC_BUILD}
+	ninja -C ${B} -v "${PARALLEL_MAKE}" chrome chrome_sandbox
 }
 
 do_install() {
@@ -308,6 +320,8 @@ do_install() {
 	install -m 0644 resources.pak ${D}${libdir}/chromium/resources.pak
 
 	install -m 0644 locales/*.pak ${D}${libdir}/chromium/locales/
+    
+    install -m 0755 lib*.so ${D}${libdir}/chromium/
 }
 
 FILES_${PN} = " \
