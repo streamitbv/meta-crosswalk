@@ -1,0 +1,31 @@
+From cb0b03e71b8e5a7db1fd1589b301ada649d3e53a Mon Sep 17 00:00:00 2001
+From: Wouter van der Stoel <wouter@streamit.eu>
+Date: Mon, 11 Sep 2017 10:32:31 +0200
+Subject: [PATCH] Fixed broken ATK version check
+
+---
+ content/browser/accessibility/browser_accessibility_auralinux.cc | 8 --------
+ 1 file changed, 8 deletions(-)
+
+diff --git a/content/browser/accessibility/browser_accessibility_auralinux.cc b/content/browser/accessibility/browser_accessibility_auralinux.cc
+index 9caccec..3370f2a 100644
+--- a/content/browser/accessibility/browser_accessibility_auralinux.cc
++++ b/content/browser/accessibility/browser_accessibility_auralinux.cc
+@@ -566,14 +566,6 @@ static AtkStateSet* browser_accessibility_ref_state_set(AtkObject* atk_object) {
+     case ui::AX_RESTRICTION_DISABLED:
+       break;
+     case ui::AX_RESTRICTION_READ_ONLY:
+-// The following would require ATK 2.16 or later, which many
+-// systems do not have. Since we aren't officially supporting ATK
+-// it's best to leave this out rather than break people's builds:
+-#if defined(ATK_CHECK_VERSION)
+-#if ATK_CHECK_VERSION(2, 16, 0)
+-      atk_state_set_add_state(atk_state_set, ATK_STATE_READ_ONLY);
+-#endif
+-#endif
+       break;
+     default:
+       atk_state_set_add_state(state_set, ATK_STATE_ENABLED);
+-- 
+2.7.4
+
