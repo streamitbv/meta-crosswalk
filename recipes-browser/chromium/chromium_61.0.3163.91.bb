@@ -21,6 +21,7 @@ COMPATIBLE_MACHINE = "(-)"
 COMPATIBLE_MACHINE_aarch64 = "(.*)"
 COMPATIBLE_MACHINE_armv6 = "(.*)"
 COMPATIBLE_MACHINE_armv7a = "(.*)"
+COMPATIBLE_MACHINE_armv7ve = "(.*)"
 COMPATIBLE_MACHINE_x86 = "(.*)"
 COMPATIBLE_MACHINE_x86-64 = "(.*)"
 
@@ -135,6 +136,8 @@ DEBUG_FLAGS_remove_armv6 = "-g"
 DEBUG_FLAGS_append_armv6 = "-g1"
 DEBUG_FLAGS_remove_armv7a = "-g"
 DEBUG_FLAGS_append_armv7a = "-g1"
+DEBUG_FLAGS_remove_armv7ve = "-g"
+DEBUG_FLAGS_append_armv7ve = "-g1"
 GN_ARGS += "symbol_level=0"
 
 # As of Chromium 60.0.3112.101 and Yocto Pyro (GCC 6, binutils 2.28), passing
@@ -232,6 +235,13 @@ GN_ARGS_append_armv6 = '\
         arm_tune="${ARM_TUNE}" \
         '
 GN_ARGS_append_armv7a = '\
+        arm_version=7 \
+        arm_arch="${ARM_ARCH}" \
+        arm_float_abi="${ARM_FLOAT_ABI}" \
+        arm_fpu="${ARM_FPU}" \
+        arm_tune="${ARM_TUNE}" \
+        '
+GN_ARGS_append_armv7ve = '\
         arm_version=7 \
         arm_arch="${ARM_ARCH}" \
         arm_float_abi="${ARM_FLOAT_ABI}" \
