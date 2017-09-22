@@ -2,8 +2,8 @@ DESCRIPTION = "Chromium is an open-source browser project that aims to build a s
 HOMEPAGE = "https://www.chromium.org/Home"
 
 SRC_URI = "https://commondatastorage.googleapis.com/chromium-browser-official/chromium-${PV}.tar.xz"
-SRC_URI[md5sum] = "17da9d08bbdf787046f2aa5586230b99"
-SRC_URI[sha256sum] = "0a2b4423551217d3ada244730fdfe3454f2630c8551b0bb784b727dc8294f2aa"
+SRC_URI[md5sum] = "bf0629c03b3e3b957a9ee99c10b28210"
+SRC_URI[sha256sum] = "4135968cac6623c1d2b224494600cd274098cce41c298f8c3908b354a34c281b"
 
 # Chromium itself is licensed under the 3-clause BSD license. However, it
 # depends upon several other projects whose copyright files are listed in
