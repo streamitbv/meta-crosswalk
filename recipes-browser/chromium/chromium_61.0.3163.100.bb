@@ -12,6 +12,7 @@ SRC_URI += " \
         file://yocto-bug10635.patch \
         file://0001-Make-base-numerics-build-with-GCC.patch \
         file://0001-Fix-compilation-for-ATK-accessibility.patch \
+        file://0001-Replace-remaining-references-to-struct-ucontext-with.patch \
         ${@bb.utils.contains('PACKAGECONFIG', 'root-profile', 'file://root-user-profile.patch', '', d)} \
         "
 
