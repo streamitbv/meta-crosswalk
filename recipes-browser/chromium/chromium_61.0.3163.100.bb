@@ -208,6 +208,7 @@ GN_ARGS += '\
         is_clang=false \
         linux_use_bundled_binutils=false \
         target_cpu="${@gn_arch_name('${TUNE_ARCH}')}" \
+        use_gold=${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', 'true', 'false', d)} \
         v8_snapshot_toolchain="//build/toolchain/yocto:yocto_target" \
         '
 
