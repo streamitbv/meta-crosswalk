@@ -2,7 +2,7 @@ require chromium.inc
 require chromium-unbundle.inc
 require gn-utils.inc
 
-inherit gtk-icon-cache qemu
+inherit gtk-icon-cache qemu autotools
 
 OUTPUT_DIR = "out/Release"
 B = "${S}/${OUTPUT_DIR}"
@@ -52,20 +52,20 @@ DEPENDS = "\
     nspr-native \
     nss \
     nss-native \
+    yasm-native \
     pango \
     pciutils \
     pkgconfig-native \
+    rockchip-mpp \
     ${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)} \
     qemu-native \
     virtual/libgl \
     "
-DEPENDS_append_x86 = "yasm-native"
-DEPENDS_append_x86-64 = "yasm-native"
 
 # The wrapper script we use from upstream requires bash.
 RDEPENDS_${PN} = "bash"
 
-PACKAGECONFIG ??= "ftp webrtc use-egl"
+PACKAGECONFIG ??= "ftp webrtc use-egl proprietary-codecs"
 # ftp: Whether to build Chromium with support for the FTP protocol.
 PACKAGECONFIG[ftp] = "disable_ftp_support=false,disable_ftp_support=true"
 # proprietary-codecs: If enabled, this option will build Chromium with support
