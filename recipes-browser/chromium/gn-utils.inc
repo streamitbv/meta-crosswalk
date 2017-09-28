@@ -10,7 +10,7 @@ def gn_arch_name(yocto_arch):
     try:
         return translation_table[yocto_arch]
     except KeyError:
-        bb.msg.fatal('"%s" is not a supported architecture.' % yocto_arch)
+        bb.fatal('"%s" is not a supported architecture.' % yocto_arch)
 
 
 def write_toolchain_file(d, file_path):
