@@ -218,6 +218,12 @@ GN_ARGS += '\
 # Note that as of M61 in some corner cases parts of the build system disable
 # the "compiler_arm_fpu" GN config, whereas -mfpu is always passed via ${CC}.
 # We might want to rework that if there are issues in the future.
+def get_arm_version(arm_arch):
+    import re
+    try:
+        return re.match(r'armv(\d).*', arm_arch).group(1)
+    except IndexError:
+        bb.fatal('Unrecognized ARM architecture value: %s' % arm_arch)
 def get_compiler_flag(params, param_name, d):
     """Given a sequence of compiler arguments in |params|, returns the value of
     an option |param_name| or an empty string if the option is not present."""
@@ -229,26 +235,13 @@ ARM_ARCH = "${@get_compiler_flag(d.getVar('TUNE_CCARGS').split(), '-march', d)}"
 ARM_FLOAT_ABI = "${@bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'hard', 'softfp', d)}"
 ARM_FPU = "${@get_compiler_flag(d.getVar('TUNE_CCARGS').split(), '-mfpu', d)}"
 ARM_TUNE = "${@get_compiler_flag(d.getVar('TUNE_CCARGS').split(), '-mcpu', d)}"
-GN_ARGS_append_armv6 = '\
-        arm_version=6 \
+ARM_VERSION = "${@get_arm_version(d.getVar('ARM_ARCH'))}"
+GN_ARGS_append_arm = '\
         arm_arch="${ARM_ARCH}" \
         arm_float_abi="${ARM_FLOAT_ABI}" \
         arm_fpu="${ARM_FPU}" \
         arm_tune="${ARM_TUNE}" \
-        '
-GN_ARGS_append_armv7a = '\
-        arm_version=7 \
-        arm_arch="${ARM_ARCH}" \
-        arm_float_abi="${ARM_FLOAT_ABI}" \
-        arm_fpu="${ARM_FPU}" \
-        arm_tune="${ARM_TUNE}" \
-        '
-GN_ARGS_append_armv7ve = '\
-        arm_version=7 \
-        arm_arch="${ARM_ARCH}" \
-        arm_float_abi="${ARM_FLOAT_ABI}" \
-        arm_fpu="${ARM_FPU}" \
-        arm_tune="${ARM_TUNE}" \
+        arm_version=${ARM_VERSION} \
         '
 # tcmalloc's atomicops-internals-arm-v6plus.h uses the "dmb" instruction that
 # is not available on (some?) ARMv6 models, which causes the build to fail.
