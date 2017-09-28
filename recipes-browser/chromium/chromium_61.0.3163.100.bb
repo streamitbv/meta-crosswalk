@@ -131,14 +131,10 @@ GN_ARGS += "use_custom_libcxx=false"
 #    instead, so that if DEBUG_BUILD is not set GN will not create a huge debug
 #    binary anyway. Since our compiler flags are passed after GN's, -g0 does
 #    not cause any issues if DEBUG_BUILD is set, as -g1 will be passed later.
-DEBUG_FLAGS_remove_i586 = "-g"
-DEBUG_FLAGS_append_i586 = "-g1"
-DEBUG_FLAGS_remove_armv6 = "-g"
-DEBUG_FLAGS_append_armv6 = "-g1"
-DEBUG_FLAGS_remove_armv7a = "-g"
-DEBUG_FLAGS_append_armv7a = "-g1"
-DEBUG_FLAGS_remove_armv7ve = "-g"
-DEBUG_FLAGS_append_armv7ve = "-g1"
+DEBUG_FLAGS_remove_arm = "-g"
+DEBUG_FLAGS_append_arm = "-g1"
+DEBUG_FLAGS_remove_x86 = "-g"
+DEBUG_FLAGS_append_x86 = "-g1"
 GN_ARGS += "symbol_level=0"
 
 # As of Chromium 60.0.3112.101 and Yocto Pyro (GCC 6, binutils 2.28), passing
