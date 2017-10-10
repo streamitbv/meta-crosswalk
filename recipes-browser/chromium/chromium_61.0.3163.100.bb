@@ -14,6 +14,7 @@ SRC_URI += " \
         file://0001-Fix-compilation-for-ATK-accessibility.patch \
         file://0001-Replace-remaining-references-to-struct-ucontext-with.patch \
         file://0001-Rename-ArrayBufferContents-AllocationKind-to-GetAllo.patch \
+        file://0001-Fix-the-compilation-of-LinkedHashSet-with-GCC.patch \
         ${@bb.utils.contains('PACKAGECONFIG', 'root-profile', 'file://root-user-profile.patch', '', d)} \
         "
 
