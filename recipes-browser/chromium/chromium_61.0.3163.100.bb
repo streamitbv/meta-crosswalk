@@ -15,6 +15,7 @@ SRC_URI += " \
         file://0001-Replace-remaining-references-to-struct-ucontext-with.patch \
         file://0001-Rename-ArrayBufferContents-AllocationKind-to-GetAllo.patch \
         file://0001-Fix-the-compilation-of-LinkedHashSet-with-GCC.patch \
+        file://0001-aec3-Use-fabsf-instead-of-std-abs-for-floats.patch \
         ${@bb.utils.contains('PACKAGECONFIG', 'root-profile', 'file://root-user-profile.patch', '', d)} \
         "
 
