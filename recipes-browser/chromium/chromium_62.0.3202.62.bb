@@ -10,12 +10,13 @@ B = "${S}/${OUTPUT_DIR}"
 SRC_URI += " \
         file://v8-qemu-wrapper.patch \
         file://yocto-bug10635.patch \
-        file://0001-Make-base-numerics-build-with-GCC.patch \
-        file://0001-Fix-compilation-for-ATK-accessibility.patch \
         file://0001-Replace-remaining-references-to-struct-ucontext-with.patch \
         file://0001-Rename-ArrayBufferContents-AllocationKind-to-GetAllo.patch \
-        file://0001-Fix-the-compilation-of-LinkedHashSet-with-GCC.patch \
         file://0001-aec3-Use-fabsf-instead-of-std-abs-for-floats.patch \
+        file://0001-WebCORS-Use-WebString-directly-instead-of-converting.patch \
+        file://0001-More-conservative-check-for-string_view-availability.patch \
+        file://0001-Revert-Disable-desktop-capture-when-WebRTC-is-disabl.patch \
+        file://chromium-gcc5-workarounds.patch \
         ${@bb.utils.contains('PACKAGECONFIG', 'root-profile', 'file://root-user-profile.patch', '', d)} \
         "
 

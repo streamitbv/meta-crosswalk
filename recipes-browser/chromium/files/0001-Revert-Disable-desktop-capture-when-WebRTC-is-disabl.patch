@@ -1,0 +1,64 @@
+Upstream-Status: Pending
+
+Filed a bug at https://bugs.chromium.org/p/chromium/issues/detail?id=776348 to
+discuss enable_webrtc-related build failures.
+
+This change is required to avoid link errors when WebRTC support is disabled.
+
+Signed-off-by: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
+---
+From 069a7b6d5958b6a4ea447b86b1cc784c9066d75a Mon Sep 17 00:00:00 2001
+From: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
+Date: Thu, 19 Oct 2017 13:18:03 +0200
+Subject: [PATCH] Revert "Disable desktop capture when WebRTC is disabled."
+
+This reverts commit 3e22361a675c05a9e878be2396e220d97cc3378f.
+---
+ content/public/browser/BUILD.gn | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
+
+diff --git a/content/public/browser/BUILD.gn b/content/public/browser/BUILD.gn
+index 2a8e39cb95f4..828eaafa5255 100644
+--- a/content/public/browser/BUILD.gn
++++ b/content/public/browser/BUILD.gn
+@@ -3,7 +3,6 @@
+ # found in the LICENSE file.
+ 
+ import("//build/config/ui.gni")
+-import("//media/media_options.gni")
+ 
+ # See //content/BUILD.gn for how this works.
+ group("browser") {
+@@ -92,6 +91,8 @@ source_set("browser_sources") {
+     "content_browser_client.h",
+     "context_factory.h",
+     "cookie_store_factory.h",
++    "desktop_capture.cc",
++    "desktop_capture.h",
+     "desktop_media_id.cc",
+     "desktop_media_id.h",
+     "devtools_agent_host.h",
+@@ -337,6 +338,7 @@ source_set("browser_sources") {
+     "//net",
+     "//ppapi/c",
+     "//services/device/public/interfaces",
++    "//third_party/webrtc/modules/desktop_capture",
+     "//ui/accessibility",
+     "//ui/base",
+     "//ui/events",
+@@ -375,12 +377,4 @@ source_set("browser_sources") {
+   if (is_chromeos) {
+     sources += [ "arc_tracing_agent.h" ]
+   }
+-
+-  if (enable_webrtc) {
+-    sources += [
+-      "desktop_capture.cc",
+-      "desktop_capture.h",
+-    ]
+-    deps += [ "//third_party/webrtc/modules/desktop_capture" ]
+-  }
+ }
+-- 
+2.13.6
+

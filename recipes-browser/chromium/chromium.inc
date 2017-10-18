@@ -2,8 +2,8 @@ DESCRIPTION = "Chromium is an open-source browser project that aims to build a s
 HOMEPAGE = "https://www.chromium.org/Home"
 
 SRC_URI = "https://commondatastorage.googleapis.com/chromium-browser-official/chromium-${PV}.tar.xz"
-SRC_URI[md5sum] = "bf0629c03b3e3b957a9ee99c10b28210"
-SRC_URI[sha256sum] = "4135968cac6623c1d2b224494600cd274098cce41c298f8c3908b354a34c281b"
+SRC_URI[md5sum] = "5b9b3c359392071c0a491e9ebaa939f4"
+SRC_URI[sha256sum] = "e8df3150386729ddcb4971636627e54815ad447be5f122201e310f5bb0bcc362"
 
 # Chromium itself is licensed under the 3-clause BSD license. However, it
 # depends upon several other projects whose copyright files are listed in
@@ -127,7 +127,6 @@ LIC_FILES_CHKSUM = "\
     file://${S}/third_party/libsync/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57 \
     file://${S}/third_party/libudev/LICENSE;md5=4fbd65380cdd255951079008b364516c \
     file://${S}/third_party/libusb/src/COPYING;md5=fbc093901857fcd118f065f900982c24 \
-    file://${S}/third_party/libva/COPYING;md5=2e48940f94acb0af582e5ef03537800f \
     file://${S}/third_party/libvpx/source/libvpx/LICENSE;md5=d5b04755015be901744a78cc30d390d4 \
     file://${S}/third_party/libwebm/source/LICENSE.TXT;md5=6e8dee932c26f2dab503abf70c96d8bb \
     file://${S}/third_party/libwebp/LICENSE;md5=72dceabd78c6f435bb304047aff1745a \
@@ -182,7 +181,7 @@ LIC_FILES_CHKSUM = "\
     file://${S}/third_party/wtl/Ms-PL.txt;md5=c1ff18e69b2e953f65f28bcbc29be275 \
     file://${S}/third_party/xdg-utils/LICENSE;md5=a5367a90934098d6b05af3b746405014 \
     file://${S}/third_party/yara/src/COPYING;md5=541962f9dacf27c928f57e3a7ba9e1f2 \
-    file://${S}/third_party/yasm/source/patched-yasm/COPYING;md5=26c9f3d11f88911950f9ff62189d3d4f \
+    file://${S}/third_party/yasm/source/patched-yasm/COPYING;md5=a12d8903508fb6bfd49d8d82c6170dd9 \
     file://${S}/third_party/zlib/LICENSE;md5=f09575dbfb09420642318b413159496f \
     file://${S}/url/third_party/mozilla/LICENSE.txt;md5=437ced1e9b232651b0912a9594da43b2 \
     file://${S}/v8/LICENSE;md5=71f2c485344c921f659ea9f7d895ea22 \
