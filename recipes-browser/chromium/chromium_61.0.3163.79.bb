@@ -33,6 +33,7 @@ DEPENDS = "\
     gperf-native \
     gtk+3 \
     jpeg \
+    libdrm \
     libwebp \
     libx11 \
     libxcomposite \
@@ -95,6 +96,7 @@ GN_ARGS = "\
         use_pulseaudio=${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'true', 'false', d)} \
         use_system_freetype=true \
         use_system_libjpeg=true \
+        use_system_libdrm=true \
         "
 
 # From Chromium's BUILDCONFIG.gn:
@@ -165,6 +167,18 @@ GN_ARGS += "enable_nacl=false"
 # let Yocto handle everything.
 GN_ARGS += "use_sysroot=false"
 
+ARM_ARCH = "${@get_compiler_flag(d.getVar('TUNE_CCARGS').split(), '-march', d)}"
+ARM_FPU = "${@get_compiler_flag(d.getVar('TUNE_CCARGS').split(), '-mfpu', d)}"
+ARM_TUNE = "${@get_compiler_flag(d.getVar('TUNE_CCARGS').split(), '-mcpu', d)}"
+
+GN_ARGS_append_armv7ve = '\
+        arm_version=7 \
+        arm_arch="${ARM_ARCH}" \
+        arm_float_abi="${ARM_FLOAT_ABI}" \
+        arm_fpu="${ARM_FPU}" \
+        arm_tune="${ARM_TUNE}" \
+        '
+
 # Upstream Chromium uses clang on Linux, and GCC is not regularly tested. This
 # means new GCC releases can introduce build failures as Chromium uses "-Wall
 # -Werror" by default and we do not have much control over which warnings GCC
@@ -211,6 +225,14 @@ GN_ARGS += '\
         '
 
 # ARM builds need special additional flags (see ${S}/build/config/arm.gni).
+def get_compiler_flag(params, param_name, d):
+    """Given a sequence of compiler arguments in |params|, returns the value of
+    an option |param_name| or an empty string if the option is not present."""
+    for param in params:
+      if param.startswith(param_name):
+        return param.split('=')[1]
+    return ''
+
 ARM_FLOAT_ABI = "${@bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'hard', 'softfp', d)}"
 GN_ARGS_append_armv6 = ' arm_version=6 arm_float_abi="${ARM_FLOAT_ABI}"'
 GN_ARGS_append_armv7a = ' arm_version=7 arm_float_abi="${ARM_FLOAT_ABI}"'
@@ -220,6 +242,7 @@ GN_ARGS_append_armv6 += 'use_allocator="none"'
 # The WebRTC code fails to build on ARMv6 when NEON is enabled.
 # https://bugs.chromium.org/p/webrtc/issues/detail?id=6574
 GN_ARGS_append_armv6 += 'arm_use_neon=false'
+
 
 INSANE_SKIP_${PN} += "dev-so"
 
@@ -318,6 +341,8 @@ do_install() {
 		${WRAPPER_FILE} > chromium-wrapper
 	install -m 0755 chromium-wrapper ${D}${libdir}/chromium/chromium-wrapper
 	ln -s ${libdir}/chromium/chromium-wrapper ${D}${bindir}/chromium
+    ln -s ${libdir}/libGLESv2.so ${D}${libdir}/chromium/
+    ln -s ${libdir}/libEGL.so ${D}${libdir}/chromium/
 
 	install -m 4755 chrome_sandbox ${D}${libdir}/chromium/chrome-sandbox
 	install -m 0755 chrome ${D}${libdir}/chromium/chromium-bin
