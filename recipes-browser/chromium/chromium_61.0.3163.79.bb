@@ -2,7 +2,7 @@ require chromium.inc
 require chromium-unbundle.inc
 require gn-utils.inc
 
-inherit gtk-icon-cache qemu autotools
+inherit gtk-icon-cache qemu
 
 OUTPUT_DIR = "out/Release"
 B = "${S}/${OUTPUT_DIR}"
